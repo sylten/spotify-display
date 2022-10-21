@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Spotify Display</title>
+		<script src="/socket.io.js"></script>
+	</head>
+	<body>
+		<div>
+			<div id="album-art">
+				<img id="album-art-image" src="" />
+			</div>
+			<div id="artist"></div>
+			<div id="track"></div>
+			<div id="album"></div>
+		</div>
+	</body>
+	<script>
+		var socket = io();
+
+		socket.on('start', function(data) {
+			console.log(data);
+			
+			const albumUrl = data.album.images[data.album.images.length - 1].url;
+			document.getElementById("album-art-image").setAttribute("src", albumUrl);
+
+			document.getElementById("artist").textContent = data.artists.map(a => a.name).join(", ");
+			document.getElementById("track").textContent = data.name;
+			document.getElementById("album").textContent = data.album.name;
+		});
+	</script>	  
+	<style>
+		body {
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		}
+		#album-art-image {
+			width: 100%;
+		}
+	</style>
+</html>
