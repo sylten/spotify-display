@@ -1,7 +1,7 @@
 const request = require("request");
 
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
+const client_id = process.env.SPOTIFY_CLIENT_ID;
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
 let token = null;
 let expirationTimestamp = 0;
@@ -10,7 +10,7 @@ function authenticate(callback, err) {
     const authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         headers: {
-            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+            'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))
         },
         form: {
             grant_type: 'client_credentials'
