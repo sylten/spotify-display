@@ -20,8 +20,8 @@
 	<script>
 		var socket = io();
 
-		socket.on('start', function(data) {
-			//console.log(data);
+		socket.on('playing', function(data) {
+			console.log(data);
 			
 			const albumUrl = data.album.images[data.album.images.length - 1].url;
 			document.getElementById("album-art-image").setAttribute("src", albumUrl);
@@ -50,7 +50,11 @@
 			display: flex;
 		}
 		#track-info {
-			margin: 32px;
+			margin: 12px;
+			width: 136px;
+		}
+		#track-info>div {
+			margin-bottom: 8px;
 		}
 		#album-art-image {
 			width: 100%;

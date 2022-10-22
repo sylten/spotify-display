@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
     console.log('user connected');
     
     if (lastTrack) {
-        io.emit("start", lastTrack);
+        io.emit("playing", lastTrack);
     }
 
     socket.on('disconnect', () => {
@@ -42,11 +42,15 @@ app.get('/event', async(req, res) => {
     console.log("event:"+eventType+"/"+trackId);
 
     if (eventType === EventType.Playing) {
-        const token = await getToken();
-        const response = await axios(`https://api.spotify.com/v1/tracks/${trackId}`, { headers: { "Authorization": "Bearer " + token } });
-        console.log(response.data.name)
-        io.emit(eventType, response.data);
-        lastTrack = response.data;
+        try {
+            const token = await getToken();
+            const response = await axios(`https://api.spotify.com/v1/tracks/${trackId}`, { headers: { "Authorization": "Bearer " + token } });
+            console.log(response.data.name)
+            io.emit(eventType, response.data);
+            lastTrack = response.data;
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     res.status(204).send();
