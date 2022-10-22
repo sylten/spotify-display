@@ -1,7 +1,7 @@
 const request = require("request");
 
-const client_id = '474f87fbed1b42e8a9565e36cd84ac7c';
-const client_secret = '094b7119a33447cf8554811a1baceaf4';
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
 
 let token = null;
 let expirationTimestamp = 0;
